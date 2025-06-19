@@ -43,7 +43,7 @@ class UserController extends Controller
                 Auth::login($user);
            });
 
-            return redirect('/');
+            return redirect('/dashboard');
         }catch(\Exception $e){
             return view('user.register')->with('error', 'Something went wrong');
         }
@@ -62,7 +62,7 @@ class UserController extends Controller
         ]);
 
         if(Auth::attempt($request->only('email', 'password'))) {
-            return redirect('/');
+            return redirect('/dashboard');
         } else {
             return view('user.login').with('error', 'Invalid credentials');
         }

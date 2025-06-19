@@ -1,4 +1,7 @@
 {
+    "admin": "Admin",
+    "client": "Client",
+    "freelancer": "Freelancer",
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
@@ -16,5 +19,11 @@
     "name-placeholder": "Enter your name",
     "email-placeholder": "Enter your email",
     "password-placeholder": "Enter your password",
-    "confirm-password-placeholder": "Confirm your password"
+    "confirm-password-placeholder": "Confirm your password",
+    "categories": "Categories",
+    "tags": "Tags",
+    "projects": "Projects",
+    "reviews": "Reviews",
+    "skills": "Skills",
+    "proposals": "Proposals"
 }
