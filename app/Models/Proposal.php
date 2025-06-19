@@ -18,6 +18,13 @@ class Proposal extends Model
     protected $casts = [
         'paid_amount' => 'integer',
     ];
+
+    public static function rules(){
+        return [
+            'paid_amount' => 'required|integer|min:0',
+            'estimated_time' => 'required',
+        ];
+    }
     
 
     public function project(): BelongsTo

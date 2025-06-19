@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->timestamps();
+            $table->unique('name');
         });
 
         Schema::create('tags', function (Blueprint $table) {
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->timestamps();
+            $table->unique('name');
         });
 
         Schema::create('projects', function (Blueprint $table) {
@@ -34,6 +36,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
             $table->foreignId('client_id')->constrained('users');
             $table->timestamps();
+            $table->unique(['title', 'client_id']);
         });
 
         Schema::create('profiles', function (Blueprint $table) {
@@ -50,6 +53,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('profile_id')->constrained();
             $table->timestamps();
+            $table->unique(['name', 'profile_id']);
         });
 
         Schema::create('profile_tags', function (Blueprint $table) {
@@ -57,6 +61,7 @@ return new class extends Migration
             $table->foreignId('profile_id')->constrained();
             $table->foreignId('tag_id')->constrained();
             $table->timestamps();
+            $table->unique(['profile_id', 'tag_id']);
         });
 
         Schema::create('project_freelancers', function (Blueprint $table) {
@@ -64,6 +69,7 @@ return new class extends Migration
             $table->foreignId('project_id')->constrained();
             $table->foreignId('freelancer_id')->constrained('users');
             $table->timestamps();
+            $table->unique(['project_id', 'freelancer_id']);
         });
 
         Schema::create('proposals', function (Blueprint $table) {
@@ -73,6 +79,7 @@ return new class extends Migration
             $table->foreignId('freelancer_id')->constrained('users');
             $table->foreignId('project_id')->constrained();
             $table->timestamps();
+            $table->unique(['freelancer_id', 'project_id']);
         });
 
         Schema::create('reviews', function (Blueprint $table) {
@@ -84,6 +91,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('users');
             $table->foreignId('project_id')->constrained();
             $table->timestamps();
+            $table->unique(['freelancer_id', 'client_id', 'project_id', 'review_type']);
         });
     }
 
@@ -100,6 +108,6 @@ return new class extends Migration
         Schema::dropIfExists('profiles');
         Schema::dropIfExists('projects');
         Schema::dropIfExists('tags');
-        Schema::dropIfExists('catogories');
+        Schema::dropIfExists('categories');
     }
 };

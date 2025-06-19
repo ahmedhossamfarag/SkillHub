@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Project;
+use App\Rules\ProjectExist;
+use App\Rules\UniqueAttributes;
 use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
@@ -17,6 +21,15 @@ class Review extends Model
         'rating' => 'integer',
         'review_type' => 'enum:client,freelancer',
     ];
+
+    public static function rules($client_id, $freelancer_id, $project_id, $id = null){
+        return [
+            'rating' => 'required|integer|min:1|max:10',
+            'comment' => 'required|string|max:255',
+            'project_id' => ['required', new ProjectExist($client_id, $freelancer_id)],
+            'review_type' => ['required', 'in:client,freelancer', new UniqueAttributes('reviews', ['client_id' => $client_id, 'freelancer_id' => $freelancer_id, 'project_id' => $project_id], $id)],
+        ];
+    }
 
 
     public function client()

@@ -19,6 +19,14 @@ class Profile extends Model
         'experience'
     ];
 
+    public static function rules(){
+        return [
+            'description' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'experience' => 'required|string|max:255',
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
