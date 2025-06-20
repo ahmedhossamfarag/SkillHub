@@ -12,7 +12,7 @@ class CategoryController
      */
     public function index()
     {
-        return Category::all();
+        return view('admin.categories.index')->with('categories', Category::all());
     }
 
     /**
@@ -20,7 +20,7 @@ class CategoryController
      */
     public function create()
     {
-        //
+        return view('admin.categories.edit')->with('category', new Category());
     }
 
     /**
@@ -30,7 +30,9 @@ class CategoryController
     {
         $request->validate(Category::rules());
         
-        return Category::create($request->only('name', 'description'));
+        $category = Category::create($request->only('name', 'description'));
+
+        return redirect()->route('categories.show', $category);
     }
 
     /**
@@ -38,7 +40,7 @@ class CategoryController
      */
     public function show(Category $category)
     {
-        return $category;
+        return view('admin.categories.show')->with('category', $category);
     }
 
     /**
@@ -46,7 +48,7 @@ class CategoryController
      */
     public function edit(Category $category)
     {
-        return $category;
+        return view('admin.categories.edit')->with('category', $category);
     }
 
     /**
@@ -58,7 +60,7 @@ class CategoryController
 
         $category->update($request->only('name', 'description'));
 
-        return $category;
+        return redirect()->route('categories.show', $category);
     }
 
     /**
@@ -68,6 +70,6 @@ class CategoryController
     {
         $category->delete();
 
-        return response()->json(['message' => 'Category deleted successfully'], 200);
+        return redirect()->route('categories.index');
     }
 }

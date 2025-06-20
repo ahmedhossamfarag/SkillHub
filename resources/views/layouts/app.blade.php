@@ -5,59 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @fluxAppearance
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div id="app" class="min-h-screen flex flex-col">
-        <nav class=" bg-gray-700 text-white">
-            <div class="flex flex-row justify-between items-center">
-                <a class="font-bold text-4xl" href="{{ url('/') }}">
-                    {{ config('app.name', 'SkillHub') }}
-                </a>
-                @unless (Route::is('login') || Route::is('register'))
-                    <div>
-                        <ul class="flex flex-row gap-3">
-                            @guest
-                                @if (Route::has('login'))
-                                    <li class="bg-gray-800 rounded-xl px-4 py-2">
-                                        <a href="{{ route('login') }}">{{ __('login') }}</a>
-                                    </li>
-                                @endif
+    <div id="app" class="min-h-screen bg-white dark:bg-zinc-800 flex flex-col">
+        <flux:header class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+            <flux:navbar  class="-mb-px">
+                <flux:navbar.item icon="home" :href="route('home')" current>{{ __('home') }}</flux:navbar.item>
+            </flux:navbar>
+            <flux:spacer />
 
-                                @if (Route::has('register'))
-                                    <li class="bg-gray-800 rounded-xl px-4 py-2">
-                                        <a href="{{ route('register') }}">{{ __('register') }}</a>
-                                    </li>
-                                @endif
-                            @else
-                                @if (Route::has('logout'))
-                                    <li class="bg-gray-800 rounded-xl px-4 py-2">
-                                        <a href="{{ route('logout') }}">{{ __('logout') }}</a>
-                                    </li>
-                                @endif
-                                @if (Route::has('dashboard'))
-                                    <li class="bg-gray-800 rounded-xl px-4 py-2">
-                                        <a href="{{ route('dashboard') }}">{{ __('dashboard') }}</a>
-                                    </li>
-                                @endif
-                                @if (Route::has('profile'))
-                                    <li class="bg-gray-800 rounded-xl px-4 py-2">
-                                        <a href="{{ route('profile') }}">{{ __('profile') }}</a>
-                                    </li>
-                                @endif
-                            @endguest
-                        </ul>
-                    </div>
-                @endunless    
-            </div>
-        </nav>
-       
+            @unless (Route::is('login') || Route::is('register'))
+            @guest
+                <flux:navbar>
+                    <flux:navbar.item icon="arrow-right-start-on-rectangle" :href="route('login')">{{ __('login') }}</flux:navbar.item>
+                    <flux:navbar.item icon="arrow-right-start-on-rectangle" :href="route('register')">{{ __('register') }}</flux:navbar.item>
+                </flux:navbar>
+            @else               
+                <flux:dropdown position="top" align="start">
+                    <flux:button icon="user" class="rounded-full!"/>
+                    <flux:menu>
+                        <a href="{{ route('dashboard') }}">
+                                <flux:menu.item icon="arrow-right-start-on-rectangle">{{ __('dashboard') }}</flux:menu.item>
+                            </a>
+                            <a href="{{ route('profile') }}">
+                                <flux:menu.item icon="arrow-right-start-on-rectangle">{{ __('profile') }}</flux:menu.item>
+                            </a>
+                            <flux:menu.separator />
+                            <a href="{{ route('logout') }}">
+                                <flux:menu.item icon="arrow-right-start-on-rectangle">{{ __('logout') }}</flux:menu.item>
+                            </a>
+                        @endguest
+                    </flux:menu>
+                </flux:dropdown>
+            @endunless 
+        </flux:header>
 
-        <main class="py-4 grow flex flex-col">
-            @yield('content')
-        </main>
+        @yield('content')
     </div>
+    @livewireScriptConfig 
+    @fluxScripts
 </body>
 </html>
 

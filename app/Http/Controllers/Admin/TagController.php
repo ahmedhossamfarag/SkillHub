@@ -12,7 +12,7 @@ class TagController
      */
     public function index()
     {
-        return Tag::all();
+        return view('admin.tags.index')->with('tags', Tag::all());
     }
 
     /**
@@ -20,7 +20,7 @@ class TagController
      */
     public function create()
     {
-        //
+        return view('admin.tags.edit')->with('tag', new Tag());
     }
 
     /**
@@ -30,7 +30,9 @@ class TagController
     {
         $request->validate(Tag::rules());
 
-        return Tag::create($request->only('name', 'description'));
+        $tag =Tag::create($request->only('name', 'description'));
+
+        return redirect()->route('tags.show', $tag);
     }
 
     /**
@@ -38,7 +40,7 @@ class TagController
      */
     public function show(Tag $tag)
     {
-        return $tag;
+        return view('admin.tags.show')->with('tag', $tag);
     }
 
     /**
@@ -46,7 +48,7 @@ class TagController
      */
     public function edit(Tag $tag)
     {
-        return $tag;
+        return view('admin.tags.edit')->with('tag', $tag);
     }
 
     /**
@@ -58,7 +60,7 @@ class TagController
 
         $tag->update($request->only('name', 'description'));
 
-        return $tag;
+        return redirect()->route('tags.show', $tag);
     }
 
     /**
@@ -68,6 +70,6 @@ class TagController
     {
         $tag->delete();
 
-        return response()->json(['message' => 'Tag deleted successfully'], 200);
+        return redirect()->route('tags.index');
     }
 }
