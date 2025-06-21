@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Client\Projects;
 
 use App\Models\Review;
 use Illuminate\Http\Request;

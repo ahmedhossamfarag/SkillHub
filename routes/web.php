@@ -29,12 +29,30 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('client')->group(function () {
         Route::resource('projects', App\Http\Controllers\Client\ProjectController::class);
-        Route::resource('reviews', App\Http\Controllers\Client\ReviewController::class);
+        Route::prefix('projects/{project}')->group(function () {
+            Route::resource('proposals', App\Http\Controllers\Client\Projects\ProposalController::class)->only(['index', 'show'])->names([
+                'index' => 'client.projects.proposals.index',
+                'show' => 'client.projects.proposals.show',
+            ]);
+            Route::post('proposals/{proposal}/accept', [App\Http\Controllers\Client\Projects\ProposalController::class, 'accept'])->name('client.projects.proposals.accept');
+            Route::post('proposals/{proposal}/reject', [App\Http\Controllers\Client\Projects\ProposalController::class, 'reject'])->name('client.projects.proposals.reject');
+            Route::get('freelancers', [App\Http\Controllers\Client\Projects\FreelancerController::class, 'index'])->name('client.projects.freelancers.index');
+            Route::resource('reviews', App\Http\Controllers\Client\Projects\ReviewController::class)->only(['store', 'destroy'])->names([
+                'store' => 'client.projects.reviews.store',
+                'destroy' => 'client.projects.reviews.destroy',
+            ]);
+        });
     });
 
     Route::prefix('freelancer')->group(function () {
-        Route::resource('projects', App\Http\Controllers\Freelancer\ProjectController::class, ['only' => ['index']]);
+        Route::resource('projects', App\Http\Controllers\Freelancer\ProjectController::class, ['only' => ['index', 'show']])->names([
+            'index' => 'freelancer.projects.index',
+            'show' => 'freelancer.projects.show',
+        ]);
         Route::resource('proposals', App\Http\Controllers\Freelancer\ProposalController::class);
-        Route::resource('reviews', App\Http\Controllers\Freelancer\ReviewController::class);
+        Route::resource('{project}/reviews', App\Http\Controllers\Freelancer\Projects\ReviewController::class)->only(['store', 'destroy'])->names([
+            'store' => 'freelancer.projects.reviews.store',
+            'destroy' => 'freelancer.projects.reviews.destroy',
+        ]);
     });
 });

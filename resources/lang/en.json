@@ -45,5 +45,7 @@
     "create-proposals": "Create Proposal",
     "proposal": "Proposal",
     "create": "Create",
-    "update": "Update"
+    "update": "Update",
+    "details": "Details",
+    "freelancers": "Freelancers"
 }

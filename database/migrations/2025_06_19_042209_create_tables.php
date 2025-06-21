@@ -76,6 +76,7 @@ return new class extends Migration
             $table->id();
             $table->integer('paid_amount');
             $table->string('estimated_time');
+            $table->string('status')->default('pending');
             $table->foreignId('freelancer_id')->constrained('users');
             $table->foreignId('project_id')->constrained();
             $table->timestamps();

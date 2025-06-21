@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Freelancer;
+namespace App\Http\Controllers\Freelancer\Projects;
 
 use App\Models\Review;
 use Illuminate\Http\Request;

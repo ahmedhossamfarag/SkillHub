@@ -13,10 +13,12 @@ class Proposal extends Model
     protected $fillable = [
         'paid_amount',
         'estimated_time',
+        'status'
     ];
 
     protected $casts = [
         'paid_amount' => 'integer',
+        'status' => 'in:pending,accepted,rejected'
     ];
 
     public static function rules(){
