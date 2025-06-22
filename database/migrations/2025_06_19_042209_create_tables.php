@@ -33,8 +33,8 @@ return new class extends Migration
             $table->string('description');
             $table->integer('budget');
             $table->dateTime('deadline');
-            $table->foreignId('category_id')->constrained();
-            $table->foreignId('client_id')->constrained('users');
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->unique(['title', 'client_id']);
         });
@@ -44,30 +44,30 @@ return new class extends Migration
             $table->string('description');
             $table->string('location');
             $table->string('experience');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('profile_id')->constrained();
+            $table->foreignId('profile_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->unique(['name', 'profile_id']);
         });
 
         Schema::create('profile_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('profile_id')->constrained();
-            $table->foreignId('tag_id')->constrained();
+            $table->foreignId('profile_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->unique(['profile_id', 'tag_id']);
         });
 
         Schema::create('project_freelancers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->constrained();
-            $table->foreignId('freelancer_id')->constrained('users');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->foreignId('freelancer_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->unique(['project_id', 'freelancer_id']);
         });
@@ -77,8 +77,8 @@ return new class extends Migration
             $table->integer('paid_amount');
             $table->string('estimated_time');
             $table->string('status')->default('pending');
-            $table->foreignId('freelancer_id')->constrained('users');
-            $table->foreignId('project_id')->constrained();
+            $table->foreignId('freelancer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->unique(['freelancer_id', 'project_id']);
         });
@@ -88,9 +88,9 @@ return new class extends Migration
             $table->integer('rating')->default(0)->max(10)->min(0);
             $table->string('comment');
             $table->string('review_type'); // freelancer or client
-            $table->foreignId('freelancer_id')->constrained('users');
-            $table->foreignId('client_id')->constrained('users');
-            $table->foreignId('project_id')->constrained();
+            $table->foreignId('freelancer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->unique(['freelancer_id', 'client_id', 'project_id', 'review_type']);
         });

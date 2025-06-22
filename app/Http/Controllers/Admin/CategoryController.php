@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController
 {
@@ -28,6 +29,8 @@ class CategoryController
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Category::class);
+        
         $request->validate(Category::rules());
         
         $category = Category::create($request->only('name', 'description'));
@@ -56,6 +59,8 @@ class CategoryController
      */
     public function update(Request $request, Category $category)
     {
+        Gate::authorize('update', $category);
+
         $request->validate(Category::rules($category->id));
 
         $category->update($request->only('name', 'description'));
@@ -68,6 +73,8 @@ class CategoryController
      */
     public function destroy(Category $category)
     {
+        Gate::authorize('delete', $category);
+
         $category->delete();
 
         return redirect()->route('categories.index');

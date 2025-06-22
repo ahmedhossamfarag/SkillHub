@@ -11,7 +11,8 @@
             <flux:heading size="lg">{{  __('description') }}</flux:heading>
             <flux:text class="px-20">{{ $category->description }}</flux:text>
         </div>
-        <div class="flex gap-10">
+        @can('update', $category)
+            <div class="flex gap-10">
             <a href="{{ route('categories.edit', $category) }}" class="text-blue-500 underline text-xl">{{ __('edit') }}</a>
             <form action="{{ route('categories.destroy', $category) }}" method="POST" class="inline">
                 @csrf
@@ -19,5 +20,6 @@
                 <button type="submit" class="text-red-500 underline text-xl cursor-pointer">{{ __('delete') }}</button>
             </form>
         </div>
+        @endcan
     </div>
 @endsection

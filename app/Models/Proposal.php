@@ -18,13 +18,14 @@ class Proposal extends Model
 
     protected $casts = [
         'paid_amount' => 'integer',
-        'status' => 'in:pending,accepted,rejected'
     ];
 
     public static function rules(){
         return [
             'paid_amount' => 'required|integer|min:0',
             'estimated_time' => 'required',
+            'status' => 'in:pending,accepted,rejected',
+            'project_id' => 'required|exists:projects,id',
         ];
     }
     

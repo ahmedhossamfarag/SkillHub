@@ -19,11 +19,16 @@ class Profile extends Model
         'experience'
     ];
 
-    public static function rules(){
+    public static function rules()
+    {
         return [
             'description' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'experience' => 'required|string|max:255',
+            'skills' => 'array',
+            'skills.*' => 'string|distinct|min:1',
+            'tags' => 'array',
+            'tags.*' => 'distinct|exists:tags,id',
         ];
     }
 

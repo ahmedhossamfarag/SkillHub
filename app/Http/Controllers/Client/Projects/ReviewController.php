@@ -3,81 +3,39 @@
 namespace App\Http\Controllers\Client\Projects;
 
 use App\Models\Review;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReviewController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    public function store(Request $request, Project $project)
     {
-        $reviews = $request->user()->reviews()->get();
 
-        return $reviews;
-    }
+        Gate::authorize('create', Review::class);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $request->merge(['review_type' => 'client', 'project_id' => $project->id, 'client_id' => $request->user()->id]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->merge(['review_type' => 'client']);
+        $request->validate(Review::rules($request->user()->id, $request->freelancer_id, $project->id));
 
-        $request->validate(Review::rules($request->user()->id, $request->freelancer_id, $request->project_id));
+        $review = new Review();
 
-        $review = $request->user()->reviews()->create($request->only(Review::getFillable()));
+        $review->fill($request->only(Review::getFillableFields()));
 
-        $review->project()->associate($request->project_id);
+        $review->project()->associate($project->id);
         $review->freelancer()->associate($request->freelancer_id);
-        $review->save();
+        
+        $request->user()->reviews()->save($review);
 
-        return $review;
+        return redirect(route('client.projects.freelancers.index', $project));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Review $review)
+    public function destroy(Project $project, Review $review)
     {
-        return $review;
-    }
+        Gate::authorize('delete', $review);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Review $review)
-    {
-        return $review;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Review $review)
-    {
-        $request->validate(Review::rules($request->user()->id, $request->freelancer_id, $request->project_id, $review->id));
-
-        $review->update($request->only(Review::getFillable()));
-
-        return $review;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Review $review)
-    {
         $review->delete();
 
-        return response()->json(['message' => 'Review deleted successfully'], 200);
+        return redirect(route('client.projects.freelancers.index', $project));
     }
 }

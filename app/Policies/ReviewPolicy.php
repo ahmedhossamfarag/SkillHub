@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies\Client;
+namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Review;
@@ -17,16 +17,11 @@ class ReviewPolicy
 
     public function create(User $user)
     {
-        return $user->isClient();
-    }
-
-    public function update(User $user, Review $review)
-    {
-        return $user->id === $review->client_id && $review->review_type === 'client';
+        return $user->isClient() || $user->isFreelancer();
     }
 
     public function delete(User $user, Review $review)
     {
-        return $user->id === $review->client_id && $review->review_type === 'client';
+        return ($user->id === $review->client_id && $review->review_type === 'client') || ($user->id === $review->freelancer_id && $review->review_type === 'freelancer');
     }
 }

@@ -8,11 +8,22 @@ use Illuminate\Http\Request;
 
 class ProposalController
 {
-    public function index(){}
+    public function index(Project $project){
+        $proposals = Proposal::with('freelancer')->where('project_id', $project->id)->get();
+        return view('client.projects.proposals.index')->with('project', $project)->with('proposals', $proposals);
+    }
 
-    public function show(Request $request, Project $project, Proposal $proposal){}
+    public function accept(Project $project, Proposal $proposal){
+        $proposal->update(['status' => 'accepted']);
 
-    public function accept(Request $request, Project $project, Proposal $proposal){}
+        $project->freelancers()->syncWithoutDetaching($proposal->freelancer_id);
 
-    public function reject(Request $request, Project $project, Proposal $proposal){}
+        return redirect(route('client.projects.proposals.index', $project));
+    }
+
+    public function reject(Project $project, Proposal $proposal){
+        $proposal->update(['status' => 'rejected']);
+
+        return redirect(route('client.projects.proposals.index', $project));
+    }
 }

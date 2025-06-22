@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TagController
 {
@@ -28,6 +29,8 @@ class TagController
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Tag::class);
+
         $request->validate(Tag::rules());
 
         $tag =Tag::create($request->only('name', 'description'));
@@ -56,6 +59,8 @@ class TagController
      */
     public function update(Request $request, Tag $tag)
     {
+        Gate::authorize('update', $tag);
+
         $request->validate(Tag::rules($tag->id));
 
         $tag->update($request->only('name', 'description'));
@@ -68,6 +73,8 @@ class TagController
      */
     public function destroy(Tag $tag)
     {
+        Gate::authorize('delete', $tag);
+        
         $tag->delete();
 
         return redirect()->route('tags.index');

@@ -6,7 +6,7 @@
         <div class="w-full md:w-[220px] pb-4">
             <flux:navlist>
                 <flux:navlist.item :href="route('dashboard')" :current="!$current">{{ __('dashboard') }}</flux:navlist.item>
-                <flux:navlist.item :href="route('freelancers.projects.index')" :current="$current == 'projects'">{{ __('projects') }}</flux:navlist.item>
+                <flux:navlist.item :href="route('freelancer.projects.index')" :current="$current == 'projects'">{{ __('projects') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('proposals.index')" :current="$current == 'proposals'">{{ __('proposals')}}</flux:navlist.item>
             </flux:navlist>
         </div>

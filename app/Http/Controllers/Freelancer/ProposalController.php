@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Freelancer;
 
+use App\Models\Project;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ProposalController
 {
@@ -12,17 +15,17 @@ class ProposalController
      */
     public function index(Request $request)
     {
-        $proposals = $request->user()->proposals()->get();
+        $proposals = Proposal::with('project')->where('freelancer_id', $request->user()->id)->get();
 
-        return $proposals;
+        return view('freelancer.proposals.index')->with('proposals', $proposals);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('freelancer.proposals.create')->with('project', Project::findOrFail($request->project_id));
     }
 
     /**
@@ -30,48 +33,41 @@ class ProposalController
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Proposal::class);
+
+        $request->merge(['status' => 'pending', 'project_id' => $request->project_id]);
+
         $request->validate(Proposal::rules());
 
-        $proposal = $request->user()->proposals()->create(Proposal::getFillable());
+        $exist = Proposal::where('freelancer_id', $request->user()->id)->where('project_id', $request->project_id)->exists();
 
-        return $proposal;
+        if ($exist) {
+            return redirect(route('proposals.index'));
+        } else {
+            $exist = DB::table('project_freelancers')->where('freelancer_id', $request->user()->id)->where('project_id', $request->project_id)->exists();
+
+            if ($exist) {
+                return redirect(route('freelancer.projects.index'));
+            }
+        }
+
+        $proposal = new Proposal();
+
+        $proposal->fill($request->only($this->getFillable()));
+
+        $proposal->project()->associate($request->project_id);
+
+        $request->user()->proposals()->save($proposal);
+
+        return redirect(route('proposals.index'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Proposal $proposal)
+    private function getFillable()
     {
-        return $proposal;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Proposal $proposal)
-    {
-        return $proposal;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Proposal $proposal)
-    {
-        $request->validate(Proposal::rules());
-
-        $proposal->update($request->only(Proposal::getFillable()));
-
-        return $proposal;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Proposal $proposal)
-    {
-        $proposal->delete();
-
-        return response()->json(['message' => 'Proposal deleted successfully'], 200);
+        return [
+            'paid_amount',
+            'estimated_time',
+            'status'
+        ];
     }
 }

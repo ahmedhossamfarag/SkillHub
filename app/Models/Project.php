@@ -9,9 +9,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Searchable;
 
 class Project extends Model
 {
+
+    use Searchable;
+
+    public function searchableAs()
+    {
+        return 'projects_index';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+            'budget' => $this->budget,
+            'deadline' => $this->deadline,
+            'created_at' => $this->created_at,
+            'category_id' => $this->category_id,
+        ];
+    }
+
     //
     protected $table = 'projects';
     protected $fillable = [
@@ -19,11 +40,13 @@ class Project extends Model
         'description',
         'budget',
         'deadline',
+        'category_id',
     ];
 
     protected $casts = [
         'deadline' => 'datetime',
         'budget' => 'integer',
+        'category_id' => 'integer',
     ];
 
     public static function rules($user_id, $id = null){
@@ -32,12 +55,13 @@ class Project extends Model
             'description' => 'required|string|max:255',
             'budget' => 'required|integer|min:0',
             'deadline' => 'required|date',
+            'category_id' => 'required|integer|exists:categories,id',
         ];
     }
 
-    public function catogory(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'catogory_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function client(): BelongsTo

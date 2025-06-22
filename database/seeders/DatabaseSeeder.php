@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Skill;
 use App\Models\Profile;
 use App\Models\Project;
+use Meilisearch\Client;
 use App\Models\Category;
 use App\Models\Proposal;
 use Illuminate\Database\Seeder;
@@ -86,5 +87,11 @@ class DatabaseSeeder extends Seeder
             'paid_amount' => 500,
             'estimated_time' => '1 week',
         ]);
+
+        $client = new Client(config('scout.meilisearch.host'), config('scout.meilisearch.key'));
+        $index = $client->index('projects_index');
+
+        // Make 'category_id' filterable
+        $index->updateFilterableAttributes(['category_id']);
     }
 }

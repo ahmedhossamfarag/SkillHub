@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Policies\Admin;
+namespace App\Policies;
 
 use App\Models\User;
 
-class CategoryPolicy
+class TagPolicy
 {
     /**
      * Create a new policy instance.

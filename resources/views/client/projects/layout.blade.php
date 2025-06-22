@@ -5,7 +5,7 @@
    <div class="flex max-md:flex-col items-start grow">
         <div class="w-full md:w-[220px] pb-4">
             <flux:navlist>
-                <flux:navlist.item :href="route('client.projects.show', $project)" :current="!$current">{{ __('details') }}</flux:navlist.item>
+                <flux:navlist.item :href="route('projects.show', $project)" :current="!$current">{{ __('details') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('client.projects.proposals.index', $project)" :current="$current == 'proposals'">{{ __('proposals') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('client.projects.freelancers.index', $project)" :current="$current == 'freelancers'">{{ __('freelancers') }}</flux:navlist.item>
             </flux:navlist>

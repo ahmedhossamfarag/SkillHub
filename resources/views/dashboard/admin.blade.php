@@ -5,7 +5,9 @@
    <div class="flex max-md:flex-col items-start grow">
         <div class="w-full md:w-[220px] pb-4">
             <flux:navlist>
-                <flux:navlist.item :href="route('dashboard')" :current="!$current">{{ __('dashboard') }}</flux:navlist.item>
+                @if (auth()->user()->isAdmin())
+                    <flux:navlist.item :href="route('dashboard')" :current="!$current">{{ __('dashboard') }}</flux:navlist.item>
+                @endif
                 <flux:navlist.item :href="route('categories.index')" :current="$current == 'categories'">{{ __('categories')}}</flux:navlist.item>
                 <flux:navlist.item :href="route('tags.index')" :current="$current == 'tags'">{{ __('tags')}}</flux:navlist.item>
             </flux:navlist>

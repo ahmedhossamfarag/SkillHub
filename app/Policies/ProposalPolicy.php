@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies\Freelancer;
+namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Proposal;
@@ -22,11 +22,6 @@ class ProposalPolicy
 
     public function update(User $user, Proposal $proposal)
     {
-        return $user->id === $proposal->freelancer_id;
-    }
-
-    public function delete(User $user, Proposal $proposal)
-    {
-        return $user->id === $proposal->freelancer_id;
+        return $user->isClient() && $user->id === $proposal->project->client_id;
     }
 }

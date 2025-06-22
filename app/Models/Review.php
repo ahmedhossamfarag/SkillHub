@@ -19,13 +19,13 @@ class Review extends Model
 
     protected $casts = [
         'rating' => 'integer',
-        'review_type' => 'enum:client,freelancer',
     ];
 
     public static function rules($client_id, $freelancer_id, $project_id, $id = null){
         return [
             'rating' => 'required|integer|min:1|max:10',
             'comment' => 'required|string|max:255',
+            'client_id' => 'required',
             'project_id' => ['required', new ProjectExist($client_id, $freelancer_id)],
             'review_type' => ['required', 'in:client,freelancer', new UniqueAttributes('reviews', ['client_id' => $client_id, 'freelancer_id' => $freelancer_id, 'project_id' => $project_id], $id)],
         ];
@@ -45,5 +45,13 @@ class Review extends Model
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    public static function getFillableFields(){
+        return [
+            'rating',
+            'comment',
+            'review_type',
+        ];
     }
 }
