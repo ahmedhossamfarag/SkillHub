@@ -35,3 +35,19 @@ To build a freelance marketplace where clients can post projects, and freelancer
 - CRUD for categories, tags
 ### Project Search
 - Search using Laravel Scout + MeiliSearch with filtering by category
+
+## Screeshots
+
+![screenshot1](/screenshots/login.png)
+
+![screenshot2](/screenshots/categories.png)
+
+![screenshot3](/screenshots/projects.png)
+
+![screenshot4](/screenshots/proposals.png)
+
+![screenshot5](/screenshots/freelancers.png)
+
+![screenshot6](/screenshots/search.png)
+
+![screenshot7](/screenshots/create_proposal.png)
