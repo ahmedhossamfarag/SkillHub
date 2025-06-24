@@ -8,6 +8,7 @@
     "all": "All",
     "login": "Login",
     "register": "Register",
+    "role": "Role",
     "already-have-account": "Already have an account?",
     "dont-have-account": "Don't have an account?",
     "logout": "Logout",

@@ -20,6 +20,16 @@
             <input type="password" name="password_confirmation" id="password_confirmation"
                 class="border border-gray-300 rounded-md p-2" required>
 
+            <label for="role">{{ __('role') }}</label>
+            <select name="role" class="border border-gray-300 rounded-md p-2" required>
+                <option value="client" class="text-black" @selected(old('role') == 'client')>{{ __('client') }}</option>
+                <option value="freelancer" class="text-black" @selected(old('role') == 'freelancer' || !old('role'))>{{ __('freelancer') }}</option>
+            </select>
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <flux:text>{{ $error }}</flux:text>
+                @endforeach
+            @endif
             <button type="submit" class="bg-sky-500 text-white rounded-md p-2 cursor-pointer">{{ __('register-button') }}</button>
         </form>
 

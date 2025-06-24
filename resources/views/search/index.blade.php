@@ -42,14 +42,16 @@
                         @endif
                     </div>
                     @auth
-                        @unless (in_array($project->id, $workProjects))
-                            <div class="flex justify-end">
-                                <a href="{{ route('proposals.create') . "?project_id=$project->id" }}">
-                                    <flux:button variant="primary" color="blue" class="cursor-pointer">{{ __('apply') }}
-                                    </flux:button>
-                                </a>
-                            </div>
-                        @endunless
+                        @if (Auth::user()->isFreelancer())
+                            @unless (in_array($project->id, $workProjects))
+                                <div class="flex justify-end">
+                                    <a href="{{ route('proposals.create') . "?project_id=$project->id" }}">
+                                        <flux:button variant="primary" color="blue" class="cursor-pointer">{{ __('apply') }}
+                                        </flux:button>
+                                    </a>
+                                </div>
+                            @endunless
+                        @endif
                     @endauth
                 </div>
             @endforeach

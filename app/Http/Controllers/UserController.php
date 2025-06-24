@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Enums\UserRole;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +25,8 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', Rule::enum(UserRole::class)],
+            'password_confirmation' => ['required', 'same:password'],
+            'role' => ['required', 'in:client,freelancer'],
         ]);
 
         try{
@@ -35,10 +35,14 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => $request->role
+                'role' => UserRole::from($request->role),
                 ]);
             
-                $user->profile()->create([]);
+                $user->profile()->create([
+                    'description' => '',
+                    'location' => '',
+                    'experience' => '',
+                ]);
 
                 Auth::login($user);
            });
