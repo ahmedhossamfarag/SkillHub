@@ -27,15 +27,23 @@ class UserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'password_confirmation' => ['required', 'same:password'],
             'role' => ['required', 'in:client,freelancer'],
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $avatar = null;
+
+        if($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar')->storePublicly('avatars', 'public');
+        }
+
         try{
-           DB::transaction(function () use ($request) {
+           DB::transaction(function () use ($request, $avatar) {
                 $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => UserRole::from($request->role),
+                'avatar' => $avatar
                 ]);
             
                 $user->profile()->create([
@@ -55,7 +63,7 @@ class UserController extends Controller
 
     public function login()
     {
-        return view('user.login');
+        return view('user.login')->with('error', null);
     }
 
     public function auth(Request $request)
@@ -68,7 +76,7 @@ class UserController extends Controller
         if(Auth::attempt($request->only('email', 'password'))) {
             return redirect('/dashboard');
         } else {
-            return view('user.login').with('error', 'Invalid credentials');
+            return view('user.login', ['error' => 'Invalid credentials']);
         }
     }
 
@@ -80,6 +88,6 @@ class UserController extends Controller
     
         $request->session()->regenerateToken();
     
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

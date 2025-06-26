@@ -11,6 +11,11 @@
         <h1 class="text-6xl font-sans text-center">{{ __('profile') }}</h1>
 
         <div class="m-10 space-y-3">
+            <div>
+                @if ($user->avatar)
+                    <img src="{{ asset('storage/'.$user->avatar) }}" alt="avatar" class="w-40 h-40 rounded-full mx-auto">
+                @endif
+            </div>
             <flux:heading size="xl">{{ __('name') }}</flux:heading>
             <flux:text color="blue">{{ $user->name }}</flux:text>
 

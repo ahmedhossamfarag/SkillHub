@@ -11,7 +11,11 @@
 
             <label for="password">{{ __('password') }}</label>
             <input type="password" name="password" id="password" class="border border-gray-300 rounded-md p-2" required>
-
+            <div>
+                @if($error)
+                    <flux:text color="red">{{ $error }}</flux:text>
+                @endif
+            </div>
             <button type="submit" class="bg-blue-500 text-white rounded-md p-2 cursor-pointer">{{ __('login-button') }}</button>
         </form>
 

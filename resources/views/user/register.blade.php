@@ -2,7 +2,7 @@
 
 @section('form')
     <div class="flex flex-col gap-3 p-4 lg:w-1/3">
-        <form method="POST" action="{{ route('register') }}" class="flex flex-col gap-3">
+        <form method="POST" action="{{ route('register') }}" class="flex flex-col gap-3" enctype="multipart/form-data">
             @csrf
 
             <label for="name">{{ __('name') }}</label>
@@ -25,6 +25,8 @@
                 <option value="client" class="text-black" @selected(old('role') == 'client')>{{ __('client') }}</option>
                 <option value="freelancer" class="text-black" @selected(old('role') == 'freelancer' || !old('role'))>{{ __('freelancer') }}</option>
             </select>
+            <label for="avatar">{{ __('avatar') }}</label>
+            <input type="file" name="avatar" id="avatar" class="border border-gray-300 rounded-md p-2">
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
                     <flux:text>{{ $error }}</flux:text>

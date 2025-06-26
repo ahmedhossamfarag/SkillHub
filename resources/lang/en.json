@@ -9,6 +9,7 @@
     "login": "Login",
     "register": "Register",
     "role": "Role",
+    "avatar": "Avatar",
     "already-have-account": "Already have an account?",
     "dont-have-account": "Don't have an account?",
     "logout": "Logout",
@@ -68,5 +69,12 @@
     "experience": "Experience",
     "add-skill": "Add Skill",
     "add-tag": "Add Tag",
-    "apply": "Apply"
+    "apply": "Apply",
+    "reset-password": "Reset Password",
+    "settings": "Settings",
+    "cancel": "Cancel",
+    "new-name": "New Name",
+    "current-password": "Current Password",
+    "new-password": "New Password",
+    "confirm-new-password": "Confirm New Password"
 }

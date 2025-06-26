@@ -41,6 +41,9 @@
                             <a href="{{ route('profile.show') }}">
                                 <flux:menu.item icon="arrow-right-start-on-rectangle">{{ __('profile') }}</flux:menu.item>
                             </a>
+                            <a href="{{ route('settings') }}">
+                                <flux:menu.item icon="arrow-right-start-on-rectangle">{{ __('settings') }}</flux:menu.item>
+                            </a>
                             <flux:menu.separator />
                             <a href="{{ route('logout') }}">
                                 <flux:menu.item icon="arrow-right-start-on-rectangle">{{ __('logout') }}</flux:menu.item>
@@ -53,6 +56,7 @@
 
         @yield('content')
     </div>
+    @livewireScripts
     @livewireScriptConfig
     @fluxScripts
 </body>

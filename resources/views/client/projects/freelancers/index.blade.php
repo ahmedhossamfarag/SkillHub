@@ -5,7 +5,11 @@
         @foreach ($freelancers as $freelancer)
             <div class="bg-[#1d1d20] space-y-2 rounded-lg p-3">
                 <div class="flex gap-3 items-center">
-                    <flux:icon.user-circle class="size-20" />
+                    @if($freelancer->avatar)
+                        <flux:avatar circle :src="asset('storage/'.$freelancer->avatar)" class="size-20!" />
+                    @else
+                        <flux:icon.user-circle class="size-20" />
+                    @endif
                     <div class="space-y-2 grow">
                         <a href="{{ route('profile.show', $freelancer->id) }}">
                             <flux:heading>{{ $freelancer->name }}</flux:heading>
