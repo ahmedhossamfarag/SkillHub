@@ -6,6 +6,8 @@
         "build": "vite build",
         "frontend": "vite",
         "backend": "php artisan serve",
+        "queue" : "php artisan queue:work -v",
+        "queue:listen" : "php artisan queue:listen",
         "dev": "concurrently \"npm run frontend\" \"npm run backend\""
     },
     "devDependencies": {

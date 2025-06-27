@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.register');
+        return view('user.register')->with('error', null);
     }
     
     public function register(Request $request)
@@ -52,12 +52,14 @@ class UserController extends Controller
                     'experience' => '',
                 ]);
 
+                $this->sendVerificationEmail($user);
+
                 Auth::login($user);
            });
 
             return redirect('/dashboard');
         }catch(\Exception $e){
-            return view('user.register')->with('error', 'Something went wrong');
+            return redirect()->back()->withInput()->with('error', 'Something went wrong');
         }
     }
 
@@ -89,5 +91,10 @@ class UserController extends Controller
         $request->session()->regenerateToken();
     
         return redirect()->route('login');
+    }
+
+    private function sendVerificationEmail(User $user)
+    {
+        $user->sendEmailVerificationNotification();
     }
 }

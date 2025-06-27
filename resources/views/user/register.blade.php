@@ -32,6 +32,9 @@
                     <flux:text>{{ $error }}</flux:text>
                 @endforeach
             @endif
+            @if ($error)
+                <flux:text color="red">{{ $error }}</flux:text>
+            @endif
             <button type="submit" class="bg-sky-500 text-white rounded-md p-2 cursor-pointer">{{ __('register-button') }}</button>
         </form>
 

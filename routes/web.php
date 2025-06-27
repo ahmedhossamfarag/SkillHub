@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/', [App\Http\Controllers\MainController::class, 'index'])->name('home');
 Route::get('/explore', [App\Http\Controllers\SearchController::class, 'index'])->name('explore');
@@ -11,6 +12,13 @@ Route::get('/login', [App\Http\Controllers\UserController::class, 'login'])->nam
 Route::post('/login', [App\Http\Controllers\UserController::class, 'auth']);
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+
+        return redirect('/'); 
+    })->middleware(['auth', 'signed'])->name('verification.verify');
+
 
     Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 

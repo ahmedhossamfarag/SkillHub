@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client\Projects;
 
+use App\Jobs\NewUploadMail;
 use App\Models\Project;
 use App\Models\Upload;
 use Illuminate\Http\Request;
@@ -43,6 +44,9 @@ class UploadController
         }
 
         $project->uploads()->create($request->only(['name', 'description', 'path', 'user_id']));
+
+        NewUploadMail::dispatch($project, $request->user(), $request->name, $request->description);
+
         return redirect()->route('client.projects.uploads.index', $project);
     }
 
