@@ -17,39 +17,49 @@
                         <flux:text>{{ $freelancer->email }}</flux:text>
                     </div>
                 </div>
-                @if ($freelancer->review_id)
-                    <div class="flex flex-col gap-3">
-                        <x-rating :rating="$freelancer->review_rating" :editable="false" />
-                        <flux:text class="px-20">{{ $freelancer->review_comment }}</flux:text>
-                        <form action="{{ route('client.projects.reviews.destroy', [$project, $freelancer->review_id]) }}"
-                            method="POST" class="w-full">
-                            @csrf
-                            @method('DELETE')
-                            <flux:button type="submit" size="xs" variant="primary" color="red" class="w-full">
-                                {{ __('delete') }} {{ __('review') }}
-                            </flux:button>
-                        </form>
+                <div x-data="{ open: false }">
+                    <div class="flex flex-row-reverse">
+                        <flux:button size="xs" icon="chevron-down" x-on:click="open = ! open" />
                     </div>
-                @elseif (auth()->user()->isClient() && auth()->user()->id == $project->client_id)
-                    <form class="flex flex-col gap-3" action="{{ route('client.projects.reviews.store', $project) }}"
-                        method="POST">
-                        @csrf
-                        <input type="hidden" name="freelancer_id" value="{{ $freelancer->id }}" />
-                        <x-rating :rating="0" :editable="true" />
-                        <flux:textarea name="comment" placeholder="{{ __('comment') }}" />
-                        @if ($errors->any())
-                            <div class="text-red-500 text-xs">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                    <div x-show="open">
+                        @if ($freelancer->review_id)
+                            <div class="flex flex-col gap-3">
+                                <x-rating :rating="$freelancer->review_rating" :editable="false" />
+                                <flux:text class="px-20">{{ $freelancer->review_comment }}</flux:text>
+                                <form
+                                    action="{{ route('client.projects.reviews.destroy', [$project, $freelancer->review_id]) }}"
+                                    method="POST" class="w-full">
+                                    @csrf
+                                    @method('DELETE')
+                                    <flux:button type="submit" size="xs" variant="primary" color="red"
+                                        class="w-full">
+                                        {{ __('delete') }} {{ __('review') }}
+                                    </flux:button>
+                                </form>
                             </div>
+                        @elseif (auth()->user()->isClient() && auth()->user()->id == $project->client_id)
+                            <form class="flex flex-col gap-3"
+                                action="{{ route('client.projects.reviews.store', $project) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="freelancer_id" value="{{ $freelancer->id }}" />
+                                <x-rating :rating="0" :editable="true" />
+                                <flux:textarea name="comment" placeholder="{{ __('comment') }}" />
+                                @if ($errors->any())
+                                    <div class="text-red-500 text-xs">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                <flux:button type="submit" variant="primary" color="green" size="xs">
+                                    {{ __('rate') }}
+                                </flux:button>
+                            </form>
                         @endif
-                        <flux:button type="submit" variant="primary" color="green" size="xs">{{ __('rate') }}
-                        </flux:button>
-                    </form>
-                @endif
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>
