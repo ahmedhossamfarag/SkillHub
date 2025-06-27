@@ -82,5 +82,11 @@
     "content": "Content",
     "image": "Image",
     "uploads": "Uploads",
-    "file": "File"
+    "file": "File",
+    "min-budget": "Min Budget",
+    "max-budget": "Max Budget",
+    "deadline-before": "Deadline Before",
+    "deadline-after": "Deadline After",
+    "created-before": "Created Before",
+    "created-after": "Created After"
 }

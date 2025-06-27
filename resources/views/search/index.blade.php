@@ -4,26 +4,30 @@
 @section('content')
     <div class="m-5 space-y-2">
         <form method="GET" id="search-form">
-            <div class="grid grid-cols-2 gap-2">
-                <div class="relative">
+            <div class="grid grid-cols-4 gap-2">
+                <div class="relative col-span-3">
                     <flux:input name="query" placeholder="{{ __('search') }}" value="{{ $query ?? '' }}" />
                     <flux:icon.magnifying-glass class="absolute top-0 right-0 size-10 text-gray-600" />
                 </div>
-                <div class="grid grid-cols-2 items-center gap-2">
-                    <flux:select name="category_id" value="{{ $categoryId ?? '' }}">
-                        <option value="">{{ __('all') }} {{ __('categories') }}</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </flux:select>
-                    <flux:button type="submit" variant="primary" class="w-full">{{ __('search') }}</flux:button>
-                </div>
+                <flux:select name="category_id">
+                    <option value="">{{ __('all') }} {{ __('categories') }}</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @selected($category->id == $categoryId)>{{ $category->name }}</option>
+                    @endforeach
+                </flux:select>
+                <flux:input name="min_budget" type="number" min="0" placeholder="{{ __('min-budget') }}" value="{{ $minBudget ?? '' }}"/>
+                <flux:input name="max_budget" type="number" min="0" placeholder="{{ __('max-budget') }}" value="{{ $maxBudget ?? '' }}" />
+                <flux:input name="deadline_before" type="date" placeholder="{{ __('deadline-before') }}" value="{{ $deadlineBefore ?? '' }}" />
+                <flux:input name="deadline_after" type="date" placeholder="{{ __('deadline-after') }}" value="{{ $deadlineAfter ?? '' }}" />
+                <flux:input name="created_before" type="date" placeholder="{{ __('created-before') }}" value="{{ $createdBefore ?? '' }}" />
+                <flux:input name="created_after" type="date" placeholder="{{ __('created-after') }}" value="{{ $createdAfter ?? '' }}" />
+                <flux:button type="submit" variant="primary" class="w-full col-span-2">{{ __('search') }}</flux:button>
             </div>
         </form>
 
         <flux:separator />
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 mt-10">
             @foreach ($projects as $project)
                 <div class="space-y-2 p-2 border border-gray-300 bg-[#383636] rounded-2xl">
                     <a href="{{ route('projects.show', $project) }}">

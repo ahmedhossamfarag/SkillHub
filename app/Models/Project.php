@@ -14,7 +14,7 @@ use Laravel\Scout\Searchable;
 class Project extends Model
 {
 
-    // use Searchable;
+    use Searchable;
 
     public function searchableAs()
     {
