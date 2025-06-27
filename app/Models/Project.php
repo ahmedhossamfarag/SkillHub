@@ -84,4 +84,16 @@ class Project extends Model
     {
         return $this->hasMany(Upload::class, 'project_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function (Project $project) {
+            $project->uploads()->each(function (Upload $upload) {
+                $upload->delete();
+            });
+            $project->freelancers()->detach();
+            $project->reviews()->delete();
+        });
+    }
 }

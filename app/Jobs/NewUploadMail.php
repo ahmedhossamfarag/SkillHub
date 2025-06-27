@@ -35,10 +35,14 @@ class NewUploadMail implements ShouldQueue
         $client = $this->project->client;
         $freelancers = $this->project->freelancers;
 
-        Mail::to($client->email)->send(new \App\Mail\NewUpload($this->user, $this->project, $this->name, $this->description));
+        if($client->hasVerifiedEmail()){
+            Mail::to($client->email)->send(new \App\Mail\NewUpload($this->user, $this->project, $this->name, $this->description));
+        }
 
         foreach($freelancers as $freelancer){
-            Mail::to($freelancer->email)->send(new \App\Mail\NewUpload($this->user, $this->project, $this->name, $this->description));
+            if($freelancer->hasVerifiedEmail()){
+                Mail::to($freelancer->email)->send(new \App\Mail\NewUpload($this->user, $this->project, $this->name, $this->description));
+            }
         }
     }
 }
