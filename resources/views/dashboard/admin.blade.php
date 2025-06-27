@@ -10,6 +10,9 @@
                 @endif
                 <flux:navlist.item :href="route('categories.index')" :current="$current == 'categories'">{{ __('categories')}}</flux:navlist.item>
                 <flux:navlist.item :href="route('tags.index')" :current="$current == 'tags'">{{ __('tags')}}</flux:navlist.item>
+                @if (auth()->user()->isAdmin())
+                    <flux:navlist.item :href="route('admin.posts.index')" :current="$current == 'posts'">{{ __('posts') }}</flux:navlist.item>
+                @endif
             </flux:navlist>
         </div>
         <flux:separator vertical  class="max-md:hidden" />

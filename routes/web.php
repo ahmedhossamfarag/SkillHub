@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [App\Http\Controllers\MainController::class, 'index'])->name('home');
 Route::get('/explore', [App\Http\Controllers\SearchController::class, 'index'])->name('explore');
 
 Route::get('/register', [App\Http\Controllers\UserController::class, 'create'])->name('register');
@@ -27,6 +25,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
         Route::resource('tags', App\Http\Controllers\Admin\TagController::class);
+        Route::resource('posts', App\Http\Controllers\Admin\PostsController::class)->only(['index', 'create', 'store', 'destroy'])->names([
+            'index' => 'admin.posts.index',
+            'create' => 'admin.posts.create',
+            'store' => 'admin.posts.store',
+            'destroy' => 'admin.posts.destroy',
+        ]);
     });
 
     Route::prefix('client')->group(function () {

@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class Payment
+class PaymentPolicy
 {
     /**
      * Create a new policy instance.

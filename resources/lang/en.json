@@ -76,5 +76,9 @@
     "new-name": "New Name",
     "current-password": "Current Password",
     "new-password": "New Password",
-    "confirm-new-password": "Confirm New Password"
+    "confirm-new-password": "Confirm New Password",
+    "posts": "Posts",
+    "create-post": "Create Post",
+    "content": "Content",
+    "image": "Image"
 }
