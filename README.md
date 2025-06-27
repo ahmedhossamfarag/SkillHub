@@ -3,20 +3,21 @@
 * Project Name: SkillHub
 * Type: Full-stack Web Application
 * Framework: Laravel 11 (PHP)
-* Frontend: Laravel Blade
+* Frontend: Laravel Blade & Tailwind CSS & Livewire & Alpine.js & Livewire Flux
 * Database: MySQL
 * Version Control: Git + GitHub
 
 ## Objective:
-To build a freelance marketplace where clients can post projects, and freelancers can bid, get hired, and both can add reviews.
+To build a freelance marketplace where clients can post projects, and freelancers can bid, get hired, upload files, and both can add reviews.
 
 ## Functionality
 
 ### Authentication & Authorization
 - Register/Login
 - Role-based access control
+- Email verification
 ### User Profile Management
-- Profile description, location, experience
+- Profile description, location, experience, avatar
 - Skills and tags
 ### Project Management
 - Clients can post jobs with:
@@ -27,14 +28,18 @@ To build a freelance marketplace where clients can post projects, and freelancer
 - Clients can:
     Review proposals, hire
 - Statuses: Pending, Accepted, Rejected
+### File Upload
+- Freelancers upload files
+- System sends email notifications in a background job
+- Clients or other freelancers can download
 ### Reviews and Ratings
 - Both sides rate each other post-project
 - Public profile rating visible to other users
 ### Admin Panel
 - Dashboard
-- CRUD for categories, tags
+- CRUD for categories, tags, posts
 ### Project Search
-- Search using Laravel Scout + MeiliSearch with filtering by category
+- Search using Laravel Scout + MeiliSearch with filtering by category, min/max budget, deadline, and created date
 
 ## Screeshots
 
