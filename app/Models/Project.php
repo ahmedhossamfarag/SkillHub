@@ -14,7 +14,7 @@ use Laravel\Scout\Searchable;
 class Project extends Model
 {
 
-    use Searchable;
+    // use Searchable;
 
     public function searchableAs()
     {
@@ -78,5 +78,10 @@ class Project extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class, 'project_id');
+    }
+
+    public function uploads(): HasMany
+    {
+        return $this->hasMany(Upload::class, 'project_id');
     }
 }

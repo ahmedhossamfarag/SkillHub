@@ -19,7 +19,7 @@ class FreelancerController
             ->where('reviews.project_id', '=', $project->id)
             ->where('reviews.review_type', '=', 'client');
         })
-        ->select('users.id', 'users.name', 'users.email', 'reviews.id as review_id', 'reviews.rating as review_rating', 'reviews.comment as review_comment')
+        ->select('users.id', 'users.name', 'users.email', 'users.avatar', 'reviews.id as review_id', 'reviews.rating as review_rating', 'reviews.comment as review_comment')
         ->get();
 
         return view('client.projects.freelancers.index')->with('project', $project)->with('freelancers', $freelancers);

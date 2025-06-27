@@ -46,6 +46,13 @@ Route::middleware(['auth'])->group(function () {
                 'store' => 'client.projects.reviews.store',
                 'destroy' => 'client.projects.reviews.destroy',
             ]);
+            Route::resource('uploads', App\Http\Controllers\Client\Projects\UploadController::class)->only(['index', 'create', 'store', 'show', 'destroy'])->names([
+                'index' => 'client.projects.uploads.index',
+                'create' => 'client.projects.uploads.create',
+                'store' => 'client.projects.uploads.store',
+                'show' => 'client.projects.uploads.show',
+                'destroy' => 'client.projects.uploads.destroy',
+            ]);
         });
     });
 

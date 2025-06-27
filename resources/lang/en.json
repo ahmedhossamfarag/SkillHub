@@ -80,5 +80,7 @@
     "posts": "Posts",
     "create-post": "Create Post",
     "content": "Content",
-    "image": "Image"
+    "image": "Image",
+    "uploads": "Uploads",
+    "file": "File"
 }

@@ -88,10 +88,10 @@ class DatabaseSeeder extends Seeder
             'estimated_time' => '1 week',
         ]);
 
-        $client = new Client(config('scout.meilisearch.host'), config('scout.meilisearch.key'));
-        $index = $client->index('projects_index');
+        // $client = new Client(config('scout.meilisearch.host'), config('scout.meilisearch.key'));
+        // $index = $client->index('projects_index');
 
-        // Make 'category_id' filterable
-        $index->updateFilterableAttributes(['category_id']);
+        // // Make 'category_id' filterable
+        // $index->updateFilterableAttributes(['category_id']);
     }
 }
