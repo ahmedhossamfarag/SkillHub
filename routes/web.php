@@ -10,6 +10,10 @@ Route::get('/register', [App\Http\Controllers\UserController::class, 'create'])-
 Route::post('/register', [App\Http\Controllers\UserController::class, 'register']);
 Route::get('/login', [App\Http\Controllers\UserController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\UserController::class, 'auth']);
+Route::view('/forgot-password', 'user.forgot-password')->name('password.request');
+Route::post('/forgot-password', [App\Http\Controllers\UserController::class, 'forgotPassword'])->name('password.email');
+Route::get('/reset-password/{token}', [App\Http\Controllers\UserController::class, 'resetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [App\Http\Controllers\UserController::class, 'resetPassword'])->name('password.update');
 
 Route::middleware(['auth'])->group(function () {
 

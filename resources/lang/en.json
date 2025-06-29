@@ -88,5 +88,6 @@
     "deadline-before": "Deadline Before",
     "deadline-after": "Deadline After",
     "created-before": "Created Before",
-    "created-after": "Created After"
+    "created-after": "Created After",
+    "forgot-password": "Forgot Password ?"
 }

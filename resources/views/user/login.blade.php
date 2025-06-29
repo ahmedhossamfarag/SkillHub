@@ -21,5 +21,8 @@
 
         <flux:text color="blue">{{ __('dont-have-account') }} <a href="{{ route('register') }}"
                 class="text-blue-500 underline">{{ __('register-button') }}</a></flux:text>
+        <flux:text color="blue"><a href="{{ route('password.request') }}"
+                class="text-blue-500 underline">{{ __('forgot-password') }}</a></flux:text>
+        
     </div>
 @endsection
