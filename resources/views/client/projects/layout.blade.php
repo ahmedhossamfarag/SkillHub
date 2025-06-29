@@ -10,6 +10,9 @@
                 <flux:navlist.item :href="route('client.projects.freelancers.index', $project)" :current="$current == 'freelancers'">{{ __('freelancers') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('client.projects.uploads.index', $project)" :current="$current == 'uploads'">{{ __('uploads') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('client.projects.messages.index', $project)" :current="$current == 'comments'">{{ __('chat') }}</flux:navlist.item>
+                @can('viewAny', [App\Models\Payment::class, $project])
+                    <flux:navlist.item :href="route('client.projects.payments.index', $project)" :current="$current == 'payments'">{{ __('payments') }}</flux:navlist.item>
+                @endcan
             </flux:navlist>
         </div>
         <flux:separator vertical  class="max-md:hidden" />

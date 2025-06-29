@@ -91,5 +91,9 @@
     "created-after": "Created After",
     "forgot-password": "Forgot Password ?",
     "chat": "Chat",
-    "new-message": "New Message"
+    "new-message": "New Message",
+    "payments": "Payments",
+    "new-payment": "New Payment",
+    "amount": "Amount",
+    "continue": "Continue"
 }

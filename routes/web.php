@@ -20,7 +20,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
 
-        return redirect('/'); 
+        return redirect('/');
     })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
@@ -70,6 +70,15 @@ Route::middleware(['auth'])->group(function () {
                 'index' => 'client.projects.messages.index',
                 'store' => 'client.projects.messages.store',
             ]);
+
+            Route::resource('payments', App\Http\Controllers\Client\Projects\PaymentController::class)->only(['index', 'create'])->names([
+                'index' => 'client.projects.payments.index',
+                'create' => 'client.projects.payments.create',
+            ]);
+
+            Route::post('/checkout', [App\Http\Controllers\Client\StripeController::class, 'createSession'])->name('checkout.create');
+            Route::get('/checkout/success', [App\Http\Controllers\Client\StripeController::class, 'success'])->name('checkout.success');
+            Route::get('/checkout/cancel', [App\Http\Controllers\Client\StripeController::class, 'cancel'])->name('checkout.cancel');
         });
     });
 
@@ -84,4 +93,7 @@ Route::middleware(['auth'])->group(function () {
             'destroy' => 'freelancer.projects.reviews.destroy',
         ]);
     });
+    Route::get('/user/stripe/create-account', [App\Http\Controllers\Client\StripeController::class, 'createAccount'])->name('create-account');
 });
+
+Route::post('/webhook/stripe', [App\Http\Controllers\Client\StripeController::class, 'handleWebhook']);
