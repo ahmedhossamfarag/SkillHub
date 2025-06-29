@@ -65,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
                 'show' => 'client.projects.uploads.show',
                 'destroy' => 'client.projects.uploads.destroy',
             ]);
+
+            Route::resource('messages', App\Http\Controllers\Client\Projects\ChatController::class)->only(['index', 'store'])->names([
+                'index' => 'client.projects.messages.index',
+                'store' => 'client.projects.messages.store',
+            ]);
         });
     });
 

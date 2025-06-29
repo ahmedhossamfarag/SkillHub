@@ -9,6 +9,7 @@
                 <flux:navlist.item :href="route('client.projects.proposals.index', $project)" :current="$current == 'proposals'">{{ __('proposals') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('client.projects.freelancers.index', $project)" :current="$current == 'freelancers'">{{ __('freelancers') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('client.projects.uploads.index', $project)" :current="$current == 'uploads'">{{ __('uploads') }}</flux:navlist.item>
+                <flux:navlist.item :href="route('client.projects.messages.index', $project)" :current="$current == 'comments'">{{ __('chat') }}</flux:navlist.item>
             </flux:navlist>
         </div>
         <flux:separator vertical  class="max-md:hidden" />

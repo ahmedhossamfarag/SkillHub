@@ -12,6 +12,7 @@
         "php": "^8.2",
         "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^12.0",
+        "laravel/reverb": "^1.0",
         "laravel/scout": "^10.15",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.2",

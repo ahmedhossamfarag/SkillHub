@@ -6,8 +6,9 @@
         "build": "vite build",
         "frontend": "vite",
         "backend": "php artisan serve",
-        "queue" : "php artisan queue:work -v",
-        "queue:listen" : "php artisan queue:listen",
+        "queue": "php artisan queue:work -v",
+        "queue:listen": "php artisan queue:listen",
+        "reverb": "php artisan reverb:start",
         "dev": "concurrently \"npm run frontend\" \"npm run backend\""
     },
     "devDependencies": {
@@ -15,8 +16,10 @@
         "autoprefixer": "^10.4.21",
         "axios": "^1.8.2",
         "concurrently": "^9.2.0",
+        "laravel-echo": "^2.1.6",
         "laravel-vite-plugin": "^1.2.0",
         "postcss": "^8.5.6",
+        "pusher-js": "^8.4.0",
         "tailwindcss": "^4.1.10",
         "vite": "^6.2.4"
     },

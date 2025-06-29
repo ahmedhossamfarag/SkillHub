@@ -89,5 +89,7 @@
     "deadline-after": "Deadline After",
     "created-before": "Created Before",
     "created-after": "Created After",
-    "forgot-password": "Forgot Password ?"
+    "forgot-password": "Forgot Password ?",
+    "chat": "Chat",
+    "new-message": "New Message"
 }

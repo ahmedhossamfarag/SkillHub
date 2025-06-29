@@ -85,6 +85,11 @@ class Project extends Model
         return $this->hasMany(Upload::class, 'project_id');
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(ChatMessage::class, 'project_id');
+    }
+
     public static function boot()
     {
         parent::boot();
