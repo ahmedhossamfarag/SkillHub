@@ -137,6 +137,18 @@ class UserController extends Controller
             : back()->withErrors(['email' => [__($status)]]);
     }
 
+    public function verifyEmail(Request $request)
+    {
+        $user = $request->user();
+        if($user->hasVerifiedEmail()) {
+            return redirect('/dashboard');
+        }
+    
+        $this->sendVerificationEmail($user);
+    
+        return redirect()->route('settings')->with('email_verification_success', 'Email successfully has been sent.');
+    }
+
     private function sendVerificationEmail(User $user)
     {
         $user->sendEmailVerificationNotification();

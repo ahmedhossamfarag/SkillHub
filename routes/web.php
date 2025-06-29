@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
+    Route::get('/verify-email', [App\Http\Controllers\UserController::class, 'verifyEmail'])->middleware('throttle:1,5')->name('verification.send');
     Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');

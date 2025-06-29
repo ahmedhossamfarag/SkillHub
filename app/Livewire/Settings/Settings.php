@@ -32,6 +32,6 @@ class Settings extends Component
 
     public function render()
     {
-        return view('livewire.settings.settings')->with('user', auth()->user());
+        return view('livewire.settings.settings')->with('user', auth()->user())->with('email_verification_success', session()->get('email_verification_success'));
     }
 }

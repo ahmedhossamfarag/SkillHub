@@ -40,6 +40,31 @@
      </div>
      <flux:separator />
      <div class="space-y-3">
+         <flux:heading size="lg">{{ __('email') }}</flux:heading>
+         <div class="flex justify-between">
+             <flux:text>{{ $user->email }}</flux:text>
+             @if (!$user->hasVerifiedEmail())
+                 <a href="{{ route('verification.send') }}">
+                     <flux:text class="text-blue-500 underline text-xl cursor-pointer">{{ __('verify') }}</flux:text>
+                 </a>
+             @endif
+         </div>
+         @isset ($email_verification_success)
+             <flux:text color="green">{{ $email_verification_success }}, {{ __('wait-5-min') }}</flux:text>
+         @endisset
+     </div>
+     <flux:separator />
+     <div class="space-y-3">
+         <flux:heading size="lg">{{ __('stripe-account') }}</flux:heading>
+         <div class="flex justify-between">
+             <flux:text>{{ $user->stripe_account_id ?? __('not-connected') }}</flux:text>
+             <a href="{{ route('create-account') }}">
+                 <flux:text class="text-blue-500 underline text-xl cursor-pointer">{{ $user->stripe_account_id ? __('visit') : __('connect') }}</flux:text>
+             </a>
+         </div>
+     </div>
+     <flux:separator />
+     <div class="space-y-3">
          <flux:button wire:click="toggleResetPassword" variant="primary" class="cursor-pointer">
              {{ __('reset-password') }}
          </flux:button>

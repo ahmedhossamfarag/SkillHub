@@ -95,5 +95,11 @@
     "payments": "Payments",
     "new-payment": "New Payment",
     "amount": "Amount",
-    "continue": "Continue"
+    "continue": "Continue",
+    "verify": "Verify",
+    "stripe-account": "Stripe Account",
+    "not-connected": "Not Connected",
+    "connect": "Connect",
+    "visit": "Visit",
+    "wait-5-min": "Wait 5 minutes and try again."
 }
