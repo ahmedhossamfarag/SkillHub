@@ -8,7 +8,7 @@
 * Version Control: Git + GitHub
 
 ## Objective:
-To build a freelance marketplace where clients can post projects, and freelancers can bid, get hired, upload files, and both can add reviews.
+To build a freelance marketplace where clients can post projects, and freelancers can bid, get hired, upload files, and both can add reviews, and chat with each other in a real-time chat system.
 
 ## Functionality
 
@@ -56,3 +56,5 @@ To build a freelance marketplace where clients can post projects, and freelancer
 ![screenshot6](/screenshots/search.png)
 
 ![screenshot7](/screenshots/create_proposal.png)
+
+![screenshot8](/screenshots/chat.png)
