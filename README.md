@@ -8,7 +8,7 @@
 * Version Control: Git + GitHub
 
 ## Objective:
-To build a freelance marketplace where clients can post projects, and freelancers can bid, get hired, upload files, and both can add reviews, and chat with each other in a real-time chat system.
+To build a freelance marketplace where clients can post projects, and freelancers can search for jobs, submit proposals, get hired, upload files, and both can add reviews, and chat with each other in a real-time chat system, clients can pay freelancers after the project is completed using Stripe.
 
 ## Functionality
 
@@ -43,18 +43,14 @@ To build a freelance marketplace where clients can post projects, and freelancer
 
 ## Screeshots
 
-![screenshot1](/screenshots/login.png)
-
-![screenshot2](/screenshots/categories.png)
-
-![screenshot3](/screenshots/projects.png)
-
-![screenshot4](/screenshots/proposals.png)
-
-![screenshot5](/screenshots/freelancers.png)
-
-![screenshot6](/screenshots/search.png)
-
 ![screenshot7](/screenshots/create_proposal.png)
 
-![screenshot8](/screenshots/chat.png)
+![screenshot8](/screenshots/chat.gif)
+
+![screenshot9](/screenshots/reviews.gif)
+
+![screenshot10](/screenshots/payments.gif)
+
+![screenshot11](/screenshots/profile.png)
+
+![screenshot12](/screenshots/settings.gif)
