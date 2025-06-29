@@ -40,7 +40,7 @@ class ChatController
             'project_id' => $project->id,
             'message' => $request->message,
         ]);
-        broadcast(new MessageSent($project, $request->user(), $message));
+        broadcast(new MessageSent($project, $request->user(), $message))->toOthers();
         return response()->json($message);
     }
 }

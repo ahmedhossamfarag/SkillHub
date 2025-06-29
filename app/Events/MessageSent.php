@@ -31,7 +31,7 @@ class MessageSent implements ShouldBroadcast
             'user_id' => $user->id,
             'user_name' => $user->name,
             'user_avatar' => $user->avatar,
-            'message' => $message
+            'message' => $message->message
         ];
     }
 
@@ -47,7 +47,7 @@ class MessageSent implements ShouldBroadcast
         ];
     }
 
-    public function broadcatAs(): string
+    public function broadcastAs(): string
     {
         return 'message.sent';
     }

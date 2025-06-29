@@ -12,10 +12,13 @@
         },
         init() {
             Alpine.store("messages", { data: @json($messages) });
+            $watch(() => $store.messages.data, () => {
+                $refs.container.scrollTop = $refs.container.scrollHeight
+            })
         }
     }'
         x-init="init()">
-        <div class="max-h-full flex flex-col w-full overflow-y-scroll p-2">
+        <div x-ref="container" id="messages-container" class="flex-1 max-h-full flex flex-col w-full overflow-y-scroll p-2">
             <template x-for="message in $store.messages.data">
                 <div x-bind:class="message.user_id == '{{ auth()->user()->id }}' ? 'self-end' : ''"
                     class="rounded-2xl p-3 mb-3 space-y-1 bg-[#1d1d20] w-fit">
@@ -33,7 +36,7 @@
             </template>
         </div>
         <div class="relative w-full">
-            <flux:input id="message" class="w-full" x-model="message" />
+            <flux:input id="message" class="w-full" x-model="message" x-on:keyup.enter="send" />
             <flux:button icon="paper-airplane" variant="primary" color="green" x-on:click="send"
                 class="absolute! right-0 top-1/2 transform -translate-y-1/2 cursor-pointer" />
         </div>
@@ -51,18 +54,21 @@
                 })
             }).then(response => {});
         }
+
+        // Pusher.logToConsole = true;
+
         Echo.join('{{ 'chat.' . $project->id }}')
             .here((users) => {
-                console.log(users);
+                // console.log(users);
             })
-            .joining((user) => {}) // new user joined
-            .leaving((user) => {}) // user left
-            .error((error) => {
-                console.error(error);
-            })
+            // .joining((user) => {}) // new user joined
+            // .leaving((user) => {}) // user left
             .listen('.message.sent', (e) => {
-                // Alpine.store('messages').data.push(e.message);
-                console.log(e);
+                if(e.message.user_id == "{{ auth()->user()->id }}") return;
+                Alpine.store('messages').data.push(e.message);
+            })
+            .error((error) => {
+                console.log(error);
             });
     </script>
 @endsection

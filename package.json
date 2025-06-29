@@ -9,7 +9,7 @@
         "queue": "php artisan queue:work -v",
         "queue:listen": "php artisan queue:listen",
         "reverb": "php artisan reverb:start",
-        "dev": "concurrently \"npm run frontend\" \"npm run backend\""
+        "dev": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run queue:listen\" \"npm run reverb\""
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
